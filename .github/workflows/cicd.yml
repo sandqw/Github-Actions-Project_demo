@@ -6,7 +6,7 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
+    runs-on: sandy
 
     steps:
     - uses: actions/checkout@v4
