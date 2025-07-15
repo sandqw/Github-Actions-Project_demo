@@ -21,6 +21,7 @@ jobs:
           
   security_check:
     runs-on: self-hosted
+    needs: compile
 
     steps:
     - uses: actions/checkout@v4
@@ -33,6 +34,7 @@ jobs:
 
     - name: git leaks installation
       run: gitleaks version
+      
     - name: git leaks check
       run: gitleaks detect source . -r git-leak-report.json -f json
 
