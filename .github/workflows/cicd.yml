@@ -37,6 +37,24 @@ jobs:
       
     - name: git leaks check
       run: gitleaks detect source . -r git-leak-report.json -f json
+      
+  build:
+    runs-on: self-hosted
+    needs: security_check
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: /opt/maven/bin/mvn test
+
+    - name: Build maven
+      run: /opt/maven/bin/mvn package
 
         
 
