@@ -18,3 +18,20 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: /opt/maven/bin/mvn compile
+      
+  security_check:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: trivy installation
+      run: |
+        sudo dnf install -y wget git unzip && \
+        sudo rpm --import https://aquasecurity.github.io/trivy-repo/rpm/public.key && \
+        sudo curl -sLo /etc/yum.repos.d/trivy.repo https://aquasecurity.github.io/trivy-repo/rpm/releases/trivy.repo && \
+        sudo dnf install -y trivy && \
+        trivy --version
+    - name: trivy fs scan
+      run: trivy fs --format table -o fs-scan-report.json .
+        
+
