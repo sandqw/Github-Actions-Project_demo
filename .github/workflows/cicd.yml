@@ -32,13 +32,9 @@ jobs:
       run: trivy fs --format table -o fs-scan-report.json .
 
     - name: git leaks installation
-      run: |
-        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_$(uname -s)_$(uname -m).tar.gz -o gitleaks.tar.gz && \
-        tar -xvzf gitleaks.tar.gz && \
-        sudo mv gitleaks /usr/local/bin/ && \
-        gitleaks version
+      run: gitleaks version
     - name: git leaks check
-      run: gitleaks source .
+      run: gitleaks detect source . -r git-leak-report.json -f json
 
         
 
